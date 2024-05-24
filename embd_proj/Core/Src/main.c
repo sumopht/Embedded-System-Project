@@ -142,7 +142,7 @@ int main(void)
 //	  sprintf(data,"%d|%d", 69, 24);
 	  HAL_UART_Transmit(&huart1, data, strlen(data), HAL_MAX_DELAY);
 
-	  HAL_Delay(1000);
+	  HAL_Delay(4000); //1000
   }
   /* USER CODE END 3 */
 }

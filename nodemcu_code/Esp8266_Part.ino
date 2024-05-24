@@ -10,6 +10,7 @@
 
 Network *network;
 unsigned long dataMillis = 0;
+unsigned long updateMillis = 0;
 int last1 = 0;
 int last2 = 0;
 
@@ -39,7 +40,10 @@ void loop() {
   // Serial.println("Connection status: " + WiFi.status());
   // put your main code here, to run repeatedly:
   //Serial.println("hello2");
-  Update_Data();
+  if (millis()- updateMillis > 1000 || updateMillis == 0){
+    updateMillis = millis();
+    Update_Data();
+  }
   //Upload to fire store every 10 minute
   if (Firebase.ready() && (millis() - dataMillis > 5000 || dataMillis == 0)){ // change to 120000
     dataMillis = millis();
