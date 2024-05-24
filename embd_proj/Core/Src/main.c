@@ -23,6 +23,7 @@
 /* USER CODE BEGIN Includes */
 #include <stdio.h>
 #include <string.h>
+#include <math.h>
 /* USER CODE END Includes */
 
 /* Private typedef -----------------------------------------------------------*/
@@ -118,12 +119,26 @@ int main(void)
 
 	  uint32_t ldr_value = readADC(ADC_CHANNEL_0); // Read LDR from PA0
 	  uint32_t mq7_value = readADC(ADC_CHANNEL_1); // Read MQ-7 from PA1
+//
+//	  // Adjust value
+//	  ldr_value = (ldr_value / 4095) * 100;
+//	  uint32_t mq7_Vout = (mq7_value / 4095) * 5;
+//	  mq7_value = pow((((5 / mq7_Vout) - 1) / 19.709), (-1/0.652));
 
-	  sprintf(msg, "LDR:%hu MQ-7:%hu \r\n", ldr_value, mq7_value);
+//	  // Adjust LDR value to percentage (0-100%)
+//	  ldr_value = (ldr_value * 100) / 4095;
+//
+	  // Calculate MQ-7 Vout in volts (0-5V)
+//	  float mq7_Vout = ((float)mq7_value / 4095) * 5.0;
+//
+//	  // Adjust MQ-7 value
+//	  mq7_value = (uint32_t)pow((((5.0 / mq7_Vout) - 1.0) / 19.709), (-1.0 / 0.652));
+
+	  sprintf(msg, "MQ-7:%hu LDR:%hu \r\n", mq7_value, ldr_value);
 	  HAL_UART_Transmit(&huart2, (uint8_t*)msg, strlen(msg), HAL_MAX_DELAY);
 
 	  char data[50];
-	  sprintf(data,"%hu|%hu", ldr_value, mq7_value);
+	  sprintf(data,"%hu|%hu|", mq7_value, ldr_value);
 //	  sprintf(data,"%d|%d", 69, 24);
 	  HAL_UART_Transmit(&huart1, data, strlen(data), HAL_MAX_DELAY);
 
